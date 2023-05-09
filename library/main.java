@@ -1,4 +1,4 @@
-//ini adalah commit pertama saya di_github
+//coba test
 import java.util.Scanner;
 
 class Main {
