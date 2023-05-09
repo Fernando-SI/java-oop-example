@@ -1,5 +1,4 @@
 //ini adalah commit pertama saya di github
-
 import java.util.Scanner;
 
 class Main {
