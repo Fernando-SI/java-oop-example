@@ -1,4 +1,4 @@
-//ini adalah commit pertama saya di github
+//ini adalah commit pertama saya di dalam github
 
 import java.util.Scanner;
 
