@@ -1,4 +1,4 @@
-//coba test
+//perbaikan menambah addbook serta try-catch
 import java.util.Scanner;
 
 class Main {
@@ -25,6 +25,8 @@ class Main {
         borrowBook();
       } else if (selectedMenu == 5) {
         returnBook();
+      } else if (selectedMenu == 6) {
+        addBook();    
       } else {
         System.out.println("wrong input");
       }
@@ -41,6 +43,7 @@ class Main {
     System.out.println("3. add member");
     System.out.println("4. borrow book");
     System.out.println("5. return book");
+    System.out.println("6. add book");
     System.out.println("================================");
   }
 
@@ -99,14 +102,25 @@ class Main {
   public static void addMember() {
     Member member = new Member();
 
-    System.out.print("id : ");
-    member.id = scan.next();
+    try {
+        System.out.print("id : ");
+        String memberId = scan.next();
 
-    System.out.print("name : ");
-    member.name = scan.next();
+        if (library.isMemberIdExist(memberId)) {
+            throw new Exception("Member ID sudah ada");
+        } else {
+            member.id = memberId;
+        }
 
-    library.addMember(member);
-  }
+        System.out.print("name : ");
+        member.name = scan.next();
+
+        library.addMember(member);
+        System.out.println("Member berhasil ditambahkan!");
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
+}
 
   public static void borrowBook() {
     System.out.print("id member : ");
@@ -127,4 +141,27 @@ class Main {
 
     library.receiveBook(memberId, bookId);
   }
+
+  public static void addBook() {
+    Book book = new Book();
+    try {
+      System.out.print("id buku : ");
+      String bookId = scan.next();
+
+      if (library.isBookIdExist(bookId)) {
+        throw new Exception("Book ID sudah ada");
+      } else {
+        book.id = bookId;
+      }
+
+      System.out.print("judul : ");
+      book.title = scan.next();
+
+      library.addBook(book);
+      System.out.println("Book berhasil ditambahkan!");
+
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    }
 }
