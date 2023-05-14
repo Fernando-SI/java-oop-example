@@ -12,4 +12,8 @@ class Member {
   public void giveBook(Book book) {
     this.borrowedBooks.remove(book);
   }
+
+  public Book getBookById(String bookId) {
+    return null;
+  }
 }
