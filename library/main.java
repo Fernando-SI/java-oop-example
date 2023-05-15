@@ -49,16 +49,16 @@ class Main {
 
   public static void initLibraryData() {
     Book book1 = new Book();
-    book1.id = "1";
-    book1.title = "pemrograman java";
+    book1.setId("1");
+    book1.setTitle ("pemrograman java");
 
     Book book2 = new Book();
-    book2.id = "2";
-    book2.title = "pemrograman oop";
+    book2.setId("2");
+    book2.setTitle("pemrograman oop");
 
     Book book3 = new Book();
-    book3.id = "3";
-    book3.title = "pemrograman android";
+    book3.setId("3");
+    book3.setTitle ("pemrograman android");
 
     Member member1 = new Member();
     member1.id = "1";
@@ -89,9 +89,14 @@ class Main {
 
   public static void showBooks() {
     for (Book book : library.books) {
-      System.out.println(book.id + " " + book.title);
+        // Periksa apakah buku sedang dipinjam oleh anggota
+        boolean isBorrowed = library.isBookBorrowed(book.getId());
+        if (!isBorrowed) {
+            System.out.println(book.getId() + " " + book.title);
+        }
     }
-  }
+}
+
 
   public static void showMembers() {
     for (Member member : library.members) {
@@ -122,25 +127,37 @@ class Main {
     }
 }
 
-  public static void borrowBook() {
-    System.out.print("id member : ");
-    String memberId = scan.next();
+public static void borrowBook() {
+  System.out.print("id member : ");
+  String memberId = scan.next();
 
-    System.out.print("id book : ");
-    String bookId = scan.next();
+  System.out.print("id book : ");
+  String bookId = scan.next();
 
-    library.giveBook(memberId, bookId);
+  // Periksa apakah ID buku dan ID anggota ada dalam sistem
+  if (!library.isBookIdExist(bookId)) {
+      System.out.println("Buku dengan ID " + bookId + " tidak ada dalam sistem.");
+      return;
   }
 
-  public static void returnBook() {
-    System.out.print("id member : ");
-    String memberId = scan.next();
-
-    System.out.print("id book : ");
-    String bookId = scan.next();
-
-    library.receiveBook(memberId, bookId);
+  if (!library.isMemberIdExist(memberId)) {
+      System.out.println("Anggota dengan ID " + memberId + " tidak ada dalam sistem.");
+      return;
   }
+
+  library.giveBook(memberId, bookId);
+}
+
+public static void returnBook() {
+  System.out.print("id member : ");
+  String memberId = scan.next();
+
+  System.out.print("id book : ");
+  String bookId = scan.next();
+
+  library.receiveBook(bookId, memberId);
+}
+
 
   public static void addBook() {
     Book book = new Book();
@@ -151,7 +168,7 @@ class Main {
       if (library.isBookIdExist(bookId)) {
         throw new Exception("Book ID sudah ada");
       } else {
-        book.id = bookId;
+        book.setId(bookId);
       }
 
       System.out.print("judul : ");

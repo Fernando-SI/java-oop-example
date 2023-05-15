@@ -14,6 +14,14 @@ class Member {
   }
 
   public Book getBookById(String bookId) {
+    for (Book book : borrowedBooks) {
+      if (book.getId().equals(bookId)) {
+        return book;
+      }
+    }
     return null;
+  } 
+
+  public void setId(String string) {
   }
 }

@@ -10,28 +10,28 @@ class Library {
 
   public void addBook(Book book) {
     for (Book b : this.books) {
-        if (b.id.equals(book.id)) {
+        if (b.getId().equals(book.getId())) {
             System.out.println("Book ID sudah ada!");
             return;
         }
     }
     Book b = new Book();
-    b.id = book.id;
+    b.setId(book.getId());
     b.title = book.title;
     this.books.add(b);
 }
 
 
 
-  public Boolean isMemberIdExist(String id) {
-    Boolean isExist = false;
-    for (Member member : this.members) {
-      if (member.id == id) {
-        isExist = true;
-      }
+public Boolean isMemberIdExist(String id) {
+  for (Member member : this.members) {
+    if (member.id.equals(id)) {
+      return true;
     }
-    return isExist;
   }
+  return false;
+}
+
 
   public void giveBook(String bookId, String memberId) {
     Book book = this.getBookById(bookId);
@@ -73,7 +73,7 @@ class Library {
 
   private Book getBookById(String id) {
     for (Book book : this.books) {
-      if (book.id.equals(id)) {
+      if (book.getId().equals(id)) {
         return book;
       }
     }
@@ -81,6 +81,15 @@ class Library {
   }
 
   public boolean isBookIdExist(String bookId) {
+    for (Book book : this.books) {
+      if (book.getId().equals(bookId)) {
+        return true;
+      }
+    }
     return false;
   }
+
+  public boolean isBookBorrowed(String id) {
+    return false;
+  }  
 }
