@@ -6,36 +6,6 @@ class Main {
   static Scanner scan = new Scanner(System.in);
   static Library library = new Library();
 
-  public static void main(String[] args) {
-    initLibraryData();
-
-    String isContinue = "y";
-
-    while (isContinue.equals("y")) {
-      showMenu();
-      int selectedMenu = chooseMenu();
-
-      if (selectedMenu == 1) {
-        showBooks();
-      } else if (selectedMenu == 2) {
-        showMembers();
-      } else if (selectedMenu == 3) {
-        addMember();
-      } else if (selectedMenu == 4) {
-        borrowBook();
-      } else if (selectedMenu == 5) {
-        returnBook();
-      } else if (selectedMenu == 6) {
-        addBook();    
-      } else {
-        System.out.println("wrong input");
-      }
-
-      System.out.print("continue ? ");
-      isContinue = scan.next();
-    }
-  }
-
   public static void showMenu() {
     System.out.println("================================");
     System.out.println("1. show books list");
@@ -46,6 +16,50 @@ class Main {
     System.out.println("6. add book");
     System.out.println("================================");
   }
+
+  public static int chooseMenu() {
+    System.out.print("choose menu : ");
+    int pilihan = scan.nextInt();
+    return pilihan;
+  }
+  public static void main(String[] args) {
+    initLibraryData();
+
+    String isContinue = "y";
+
+    // menggunakan do-while
+    do {
+      showMenu();
+      int selectedMenu = chooseMenu();
+
+      switch (selectedMenu) {
+          case 1:
+              showBooks();
+              break;
+          case 2:
+              showMembers();
+              break;
+          case 3:
+              addMember();
+              break;
+          case 4:
+              borrowBook();
+              break;
+          case 5:
+              returnBook();
+              break;
+          case 6:
+              addBook();
+              break;
+          default:
+              System.out.println("Pilihan anda tidak terdapat di menu");
+              break;
+      }
+
+      System.out.print("Continue? (y/n): ");
+      isContinue = scan.next();
+  } while (isContinue.equals("y"));
+}
 
   public static void initLibraryData() {
     Book book1 = new Book();
@@ -61,16 +75,16 @@ class Main {
     book3.setTitle ("pemrograman android");
 
     Member member1 = new Member();
-    member1.id = "1";
-    member1.name = "aka";
+    member1.setId("1");
+    member1.setName("aka");
 
     Member member2 = new Member();
-    member2.id = "2";
-    member2.name = "budi";
+    member2.setId("2");
+    member2.setName("budi");
 
     Member member3 = new Member();
-    member3.id = "3";
-    member3.name = "tono";
+    member3.setId("3");
+    member3.setName("tono");
 
     library.books.add(book1);
     library.books.add(book2);
@@ -81,12 +95,7 @@ class Main {
     library.members.add(member3);
   }
 
-  public static int chooseMenu() {
-    System.out.print("choose menu : ");
-    int pilihan = scan.nextInt();
-    return pilihan;
-  }
-
+  // fungsi untuk menampilkan buku
   public static void showBooks() {
     for (Book book : library.books) {
         // Periksa apakah buku sedang dipinjam oleh anggota
@@ -97,16 +106,17 @@ class Main {
     }
 }
 
-
+  // fungsi untuk menampilkan anggota
   public static void showMembers() {
     for (Member member : library.members) {
-      System.out.println(member.id + " " + member.name);
+      System.out.println(member.getId() + " " + member.getName());
     }
   }
 
+  // fungsi untuk menambah anggota
   public static void addMember() {
     Member member = new Member();
-
+    // penggunaan try catch apabila member sudah terdapat dalam sistem
     try {
         System.out.print("id : ");
         String memberId = scan.next();
@@ -114,11 +124,11 @@ class Main {
         if (library.isMemberIdExist(memberId)) {
             throw new Exception("Member ID sudah ada");
         } else {
-            member.id = memberId;
+            member.setId(memberId);
         }
 
         System.out.print("name : ");
-        member.name = scan.next();
+        member.setName(scan.next());
 
         library.addMember(member);
         System.out.println("Member berhasil ditambahkan!");
@@ -127,6 +137,7 @@ class Main {
     }
 }
 
+// fungsi untuk meminjam buku
 public static void borrowBook() {
   System.out.print("id member : ");
   String memberId = scan.next();
@@ -148,6 +159,7 @@ public static void borrowBook() {
   library.giveBook(memberId, bookId);
 }
 
+// fungsi untuk mengembalikan buku
 public static void returnBook() {
   System.out.print("id member : ");
   String memberId = scan.next();
@@ -158,9 +170,10 @@ public static void returnBook() {
   library.receiveBook(bookId, memberId);
 }
 
-
+  // fungsi untuk menambahkan buku
   public static void addBook() {
     Book book = new Book();
+    // penggunaan try catch untuk memeriksa apakah buku tersebut sudah  ada pada sistem
     try {
       System.out.print("id buku : ");
       String bookId = scan.next();

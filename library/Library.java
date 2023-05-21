@@ -3,7 +3,7 @@ import java.util.ArrayList;
 class Library {
   public ArrayList<Book> books = new ArrayList<Book>();
   public ArrayList<Member> members = new ArrayList<Member>();
-
+  
   public void addMember(Member member) {
     this.members.add(member);
   }
@@ -25,7 +25,7 @@ class Library {
 
 public Boolean isMemberIdExist(String id) {
   for (Member member : this.members) {
-    if (member.id.equals(id)) {
+    if (member.getId().equals(id)) {
       return true;
     }
   }
@@ -43,12 +43,7 @@ public Boolean isMemberIdExist(String id) {
   }
 
   public void receiveBook(String bookId, String memberId) {
-    // Book book = this.getBookById(bookId);
-    // this.books.add(book);
 
-    // Member member = this.getMemberById(memberId);
-    // int memberIndex = this.getMemberIndex(member);
-    // this.members.get(memberIndex).borrowedBooks.remove(book);
     Member member = this.getMemberById(memberId);
     int memberIndex = this.getMemberIndex(member);
 
@@ -64,7 +59,7 @@ public Boolean isMemberIdExist(String id) {
 
   private Member getMemberById(String id) {
     for (Member member : this.members) {
-      if (member.id.equals(id)) {
+      if (member.getId().equals(id)) {
         return member;
       }
     }
