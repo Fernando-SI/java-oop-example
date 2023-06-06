@@ -1,13 +1,13 @@
 class Book {
-  private String id;
-  String title;
+  private String Id;
+  private String title;
 
-  public void setId(String id){
-    this.id = id;
+  public void setId(String bookId){
+    this.Id = bookId;
   }
 
   String getId(){
-    return id;
+    return Id;
   }
 
   public void setTitle(String title){

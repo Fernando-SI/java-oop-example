@@ -11,9 +11,9 @@ class Main {
     System.out.println("1. show books list");
     System.out.println("2. show members list");
     System.out.println("3. add member");
-    System.out.println("4. borrow book");
-    System.out.println("5. return book");
-    System.out.println("6. add book");
+    System.out.println("4. add book");
+    System.out.println("5. borrow book");
+    System.out.println("6. return book");
     System.out.println("================================");
   }
 
@@ -43,13 +43,13 @@ class Main {
               addMember();
               break;
           case 4:
-              borrowBook();
+              addBook();
               break;
           case 5:
-              returnBook();
+              borrowBook();
               break;
           case 6:
-              addBook();
+              returnBook();
               break;
           default:
               System.out.println("Pilihan anda tidak terdapat di menu");
@@ -99,10 +99,10 @@ class Main {
   public static void showBooks() {
     for (Book book : library.books) {
         // Periksa apakah buku sedang dipinjam oleh anggota
-        boolean isBorrowed = library.isBookBorrowed(book.getId());
-        if (!isBorrowed) {
-            System.out.println(book.getId() + " " + book.title);
-        }
+        // boolean isBorrowed = library.isBookBorrowed(book.getId());
+        // if (!isBorrowed) {
+        System.out.println(book.getId() + " " + book.getTittle());
+        // }
     }
 }
 
@@ -139,24 +139,28 @@ class Main {
 
 // fungsi untuk meminjam buku
 public static void borrowBook() {
+  try{
   System.out.print("id member : ");
   String memberId = scan.next();
 
   System.out.print("id book : ");
   String bookId = scan.next();
 
-  // Periksa apakah ID buku dan ID anggota ada dalam sistem
-  if (!library.isBookIdExist(bookId)) {
-      System.out.println("Buku dengan ID " + bookId + " tidak ada dalam sistem.");
-      return;
-  }
-
-  if (!library.isMemberIdExist(memberId)) {
-      System.out.println("Anggota dengan ID " + memberId + " tidak ada dalam sistem.");
-      return;
-  }
-
   library.giveBook(memberId, bookId);
+  }catch (Exception e){
+    System.out.println("Buku tidak ada di dalam list");
+  }
+
+  // Periksa apakah ID buku dan ID anggota ada dalam sistem
+  // if (!library.isBookIdExist(bookId)) {
+  //     System.out.println("Buku dengan ID " + bookId + " tidak ada dalam sistem.");
+  //     return;
+  // }
+
+  // if (!library.isMemberIdExist(memberId)) {
+  //     System.out.println("Anggota dengan ID " + memberId + " tidak ada dalam sistem.");
+  //     return;
+  // }
 }
 
 // fungsi untuk mengembalikan buku
@@ -167,31 +171,27 @@ public static void returnBook() {
   System.out.print("id book : ");
   String bookId = scan.next();
 
-  library.receiveBook(bookId, memberId);
+  library.receiveBook(memberId, bookId);
 }
 
   // fungsi untuk menambahkan buku
   public static void addBook() {
     Book book = new Book();
     // penggunaan try catch untuk memeriksa apakah buku tersebut sudah  ada pada sistem
-    try {
+    // try {
       System.out.print("id buku : ");
-      String bookId = scan.next();
-
-      if (library.isBookIdExist(bookId)) {
-        throw new Exception("Book ID sudah ada");
-      } else {
-        book.setId(bookId);
-      }
+      book.setId(scan.next());
 
       System.out.print("judul : ");
-      book.title = scan.next();
+      book.setTitle(scan.next());
 
       library.addBook(book);
-      System.out.println("Book berhasil ditambahkan!");
+      // System.out.println("Book berhasil ditambahkan!");
 
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
+      // if (library.isBookIdExist(bookId)) {
+      //   throw new Exception("Book ID sudah ada");
+      // } else {
+      //   book.setId(bookId);
+      // }
     }
 }
