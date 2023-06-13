@@ -61,6 +61,7 @@ class Main {
   } while (isContinue.equals("y"));
 }
 
+  
   public static void initLibraryData() {
     Book book1 = new Book();
     book1.setId("1");
